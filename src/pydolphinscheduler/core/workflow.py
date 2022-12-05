@@ -27,7 +27,7 @@ from pydolphinscheduler.core.resource import Resource
 from pydolphinscheduler.core.resource_plugin import ResourcePlugin
 from pydolphinscheduler.exceptions import PyDSParamException, PyDSTaskNoFoundException
 from pydolphinscheduler.java_gateway import gateway
-from pydolphinscheduler.models import Base, Project, Tenant, User
+from pydolphinscheduler.models import Base, Project, User
 from pydolphinscheduler.utils.date import MAX_DATETIME, conv_from_str, conv_to_schedule
 
 
@@ -96,7 +96,6 @@ class Workflow(Base):
         "name",
         "description",
         "_project",
-        "_tenant",
         "worker_group",
         "warning_type",
         "warning_group_id",
@@ -120,7 +119,6 @@ class Workflow(Base):
         timezone: Optional[str] = configuration.WORKFLOW_TIME_ZONE,
         user: Optional[str] = configuration.WORKFLOW_USER,
         project: Optional[str] = configuration.WORKFLOW_PROJECT,
-        tenant: Optional[str] = configuration.WORKFLOW_TENANT,
         worker_group: Optional[str] = configuration.WORKFLOW_WORKER_GROUP,
         warning_type: Optional[str] = configuration.WORKFLOW_WARNING_TYPE,
         warning_group_id: Optional[int] = 0,
@@ -130,6 +128,8 @@ class Workflow(Base):
         param: Optional[Dict] = None,
         resource_plugin: Optional[ResourcePlugin] = None,
         resource_list: Optional[List[Resource]] = None,
+        *args,
+        **kwargs,
     ):
         super().__init__(name, description)
         self.schedule = schedule
@@ -138,7 +138,6 @@ class Workflow(Base):
         self.timezone = timezone
         self._user = user
         self._project = project
-        self._tenant = tenant
         self.worker_group = worker_group
         self.warning_type = warning_type
         if warning_type.strip().upper() not in ("FAILURE", "SUCCESS", "ALL", "NONE"):
@@ -175,16 +174,6 @@ class Workflow(Base):
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         WorkflowContext.delete()
-
-    @property
-    def tenant(self) -> Tenant:
-        """Get attribute tenant."""
-        return Tenant(self._tenant)
-
-    @tenant.setter
-    def tenant(self, tenant: Tenant) -> None:
-        """Set attribute tenant."""
-        self._tenant = tenant.name
 
     @property
     def project(self) -> Project:
@@ -436,7 +425,6 @@ class Workflow(Base):
             self.execution_type,
             self.timeout,
             self.worker_group,
-            self._tenant,
             self.release_state,
             # TODO add serialization function
             json.dumps(self.task_relation_json),
