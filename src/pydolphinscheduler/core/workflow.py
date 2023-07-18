@@ -176,6 +176,11 @@ class Workflow(Base):
         self._workflow_code = None
         self.resource_list = resource_list or []
 
+        # do not thing but for air2phin migrate
+        self.schedule = None
+        if 'schedule' in kwargs or 'schedule_interval' in kwargs:
+            self.schedule = kwargs.get('schedule') or kwargs.get('schedule_interval')
+
     def __enter__(self) -> "Workflow":
         WorkflowContext.set(self)
         return self
