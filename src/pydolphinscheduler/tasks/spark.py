@@ -52,7 +52,7 @@ class Spark(Engine):
         main_class: str,
         main_package: str,
         program_type: ProgramType | None = ProgramType.SCALA,
-        deploy_mode: DeployMode | None = DeployMode.CLUSTER,
+        deploy_mode: "pydolphinscheduler.tasks.spark.DeployMode | None" = DeployMode.CLUSTER,
         app_name: str | None = None,
         driver_cores: int | None = 1,
         driver_memory: str | None = "512M",

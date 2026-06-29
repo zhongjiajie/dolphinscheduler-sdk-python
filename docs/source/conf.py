@@ -69,7 +69,6 @@ extensions = [
     # Add inline tabbed content
     "sphinx_inline_tabs",
     "sphinx_copybutton",
-    "sphinx_github_changelog",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
