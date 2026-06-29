@@ -177,14 +177,10 @@ GitHub. You may locally ensure docs could be built successfully in case the fail
 
 ### Build Document Automatically with tox
 
-We integrated document build process into tox, you can build the latest document and all document(including history documents) via
-single command
+We integrated document build process into tox, and you can build the latest documentation via a single command.
 
 ```shell
-# Build the latest document in dev branch
 tox -e doc-build
-# Build all documents, which including the latest and all history documents
-tox -e doc-build-multi
 ```
 
 ### Build Document Manually
@@ -200,15 +196,6 @@ Then go to document directory and execute the build command
 ```shell
 cd pydolphinscheduler/docs/
 make clean && make html
-```
-
-or if you want to build history documents, you should execute the command below
-
-```shell
-# Fetch all history tags because we use tag to build history documents via [sphinx-multiversion](https://holzhaus.github.io/sphinx-multiversion/master/index.html)
-git fetch --tags
-cd pydolphinscheduler/docs/
-make clean && make multiversion
 ```
 
 ## Unit Test
