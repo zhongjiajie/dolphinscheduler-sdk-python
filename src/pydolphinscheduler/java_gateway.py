@@ -184,9 +184,7 @@ class GatewayEntryPoint:
         self, tenant_name: str, queue_name: str, description: str | None = None
     ):
         """Create tenant through java gateway."""
-        return self.entry_point.createTenant(
-            tenant_name, description, queue_name
-        )
+        return self.entry_point.createTenant(tenant_name, description, queue_name)
 
     def query_tenant(self, tenant_code: str):
         """Query tenant through java gateway."""
@@ -258,15 +256,11 @@ class GatewayEntryPoint:
         task_name: str | None = None,
     ):
         """Get dependent info through java gateway."""
-        return self.entry_point.getDependentInfo(
-            project_name, workflow_name, task_name
-        )
+        return self.entry_point.getDependentInfo(project_name, workflow_name, task_name)
 
     def get_workflow_info(self, user_name: str, project_name: str, workflow_name: str):
         """Get workflow info through java gateway."""
-        return self.entry_point.getWorkflowInfo(
-            user_name, project_name, workflow_name
-        )
+        return self.entry_point.getWorkflowInfo(user_name, project_name, workflow_name)
 
     def create_or_update_workflow(
         self,
